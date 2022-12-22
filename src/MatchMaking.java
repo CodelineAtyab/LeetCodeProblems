@@ -18,12 +18,15 @@ public class MatchMaking {
 
         ArrayList<Integer[]> resultStore = new ArrayList<Integer[]>();
 
+        // Case 1
         resultStore = getMatchingPairs(new int[] { 6, 7, 4, 3, 4, 5, 6 }, target);
         displayResult(resultStore);
         
+        // Case 2
         resultStore = getMatchingPairs(new int[] { 6, 6, 6, 4, 4, 4, 5 }, target);
         displayResult(resultStore);
         
+        // Case 3
         resultStore = getMatchingPairs(new int[] { 3, 7, 5, 5, 2, 8, 9 }, target);
         displayResult(resultStore);
     }
