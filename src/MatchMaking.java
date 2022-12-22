@@ -19,7 +19,7 @@ public class MatchMaking {
         ArrayList<Integer[]> resultStore = new ArrayList<Integer[]>();
 
         // Case 1
-        resultStore = getMatchingPairs(new int[] { 6, 7, 4, 3, 4, 5, 6 }, target);
+        resultStore = getMatchingPairs(new int[] { 6, 6, 6, 4, 4, 4, 4, 6, 6}, target);
         displayResult(resultStore);
         
         // Case 2
@@ -28,6 +28,10 @@ public class MatchMaking {
         
         // Case 3
         resultStore = getMatchingPairs(new int[] { 3, 7, 5, 5, 2, 8, 9 }, target);
+        displayResult(resultStore);
+        
+        // Case 4
+        resultStore = getMatchingPairs(new int[] { 6, 7, 4, 3, 4, 5, 6 }, target);
         displayResult(resultStore);
     }
 
@@ -58,13 +62,42 @@ public class MatchMaking {
 
         for (int index = 0; index < inputArray.length; index++) {
             int partOfPair = targetSum - inputArray[index];
+            Integer usageCountOfPart = stateMap.get(partOfPair);
 
-            if (stateMap.containsKey(partOfPair)) {
+            // Here we found a pair.
+            if (stateMap.containsKey(partOfPair) && usageCountOfPart >= 1) {
                 resultStore.add(
                     new Integer[] {inputArray[index], partOfPair}
                 );
+                
+                // Get existing usage count and decrease it by 1 for the first part of the pair
+                int usageCount = stateMap.get(partOfPair);
+                stateMap.put(partOfPair, usageCount - 1);
+                
+                // Get existing usage count and decrease it by 1 for the second part of the pair
+                if (stateMap.containsKey(inputArray[index])) {
+                    usageCount = stateMap.get(inputArray[index]);
+                    stateMap.put(inputArray[index], usageCount - 1);
+                }
+                else {
+                    /*
+                     * In case we already used the new part of pair with an existing part
+                     * Then we should set the usage to -1 so it balances out.
+                     * */
+                    stateMap.put(inputArray[index], -1);
+                }
             }
-            stateMap.put(inputArray[index], 0);
+            
+            // If something is new, we can put it with allowed usage to 1 time.
+            // 6, 6, 6, 4, 4, 4
+            if (!stateMap.containsKey(inputArray[index])) {
+                stateMap.put(inputArray[index], 1);  // 1 is the allowed usage count.
+            }
+            else {
+                // Get existing usage count and update the counter by 1
+                int usageCount = stateMap.get(inputArray[index]);
+                stateMap.put(inputArray[index], usageCount + 1);
+            }
         }
         
         return resultStore;
