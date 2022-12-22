@@ -45,12 +45,12 @@ public class MatchMaking {
      */
     public static ArrayList<Integer[]> getMatchingPairs(int[] inputArray, int targetSum) {
         /*
-         * {6, 7, 4, 3, 4, 5, 6} targetSum is 10 1. 
-         * Subtract the first element from target to get 
-         * Other part of the pair.
-         */
-
+         * This will remember the previous states, so we know which part of
+         * pair has been traversed already.
+         * */
         HashMap<Integer, Integer> stateMap = new HashMap<Integer, Integer>();
+        
+        // Used to store every generated pair.
         ArrayList<Integer[]> resultStore = new ArrayList<Integer[]>();
 
         for (int index = 0; index < inputArray.length; index++) {
