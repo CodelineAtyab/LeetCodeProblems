@@ -14,12 +14,18 @@ public class MatchMaking {
      * @param args: list of strings passed externally to this application.
      */
     public static void main(String[] args) {
-        int[] arrayOfNumbers = new int[] { 6, 7, 4, 3, 4, 5, 6 };
         int target = 10;
 
         ArrayList<Integer[]> resultStore = new ArrayList<Integer[]>();
 
-        resultStore = getMatchingPairs(arrayOfNumbers, target);
+        resultStore = getMatchingPairs(new int[] { 6, 7, 4, 3, 4, 5, 6 }, target);
+        displayResult(resultStore);
+        
+        resultStore = getMatchingPairs(new int[] { 6, 6, 6, 4, 4, 4, 5 }, target);
+        displayResult(resultStore);
+        
+        resultStore = getMatchingPairs(new int[] { 3, 7, 5, 5, 2, 8, 9 }, target);
+        displayResult(resultStore);
     }
 
     /**
@@ -34,7 +40,8 @@ public class MatchMaking {
      * 
      * @param inputArray: Collection of numbers.
      * @param targetSum:  Number that would e acquired by adding up a pair.
-     * @return
+     * @return An ArrayList of Array (2 elements) that will look something like:
+     *         [[6,4], [7,3], [4,6]]
      */
     public static ArrayList<Integer[]> getMatchingPairs(int[] inputArray, int targetSum) {
         /*
@@ -44,20 +51,27 @@ public class MatchMaking {
          */
 
         HashMap<Integer, Integer> stateMap = new HashMap<Integer, Integer>();
+        ArrayList<Integer[]> resultStore = new ArrayList<Integer[]>();
 
         for (int index = 0; index < inputArray.length; index++) {
             int partOfPair = targetSum - inputArray[index];
 
             if (stateMap.containsKey(partOfPair)) {
-                // We found a pair
-                System.out.println(inputArray[index] + " - " + partOfPair);
+                resultStore.add(
+                    new Integer[] {inputArray[index], partOfPair}
+                );
             }
-
             stateMap.put(inputArray[index], 0);
-
         }
-
-        return new ArrayList<Integer[]>();
+        
+        return resultStore;
+    }
+    
+    private static void displayResult(ArrayList<Integer[]> inputArray) {
+        for (Integer[] currentPair: inputArray) {
+            System.out.println(currentPair[0] + " - " + currentPair[1]);
+        }
+        System.out.println();
     }
 
 }
