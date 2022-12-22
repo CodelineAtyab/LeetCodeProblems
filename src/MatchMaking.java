@@ -39,7 +39,7 @@ public class MatchMaking {
      * [[6,4], [7,3], [4,6]] can be represented as [[4,6], [3,7], [6,4]]
      * 
      * @param inputArray: Collection of numbers.
-     * @param targetSum:  Number that would e acquired by adding up a pair.
+     * @param targetSum:  Number that would be acquired by adding up a pair.
      * @return An ArrayList of Array (2 elements) that will look something like:
      *         [[6,4], [7,3], [4,6]]
      */
@@ -73,5 +73,4 @@ public class MatchMaking {
         }
         System.out.println();
     }
-
 }
